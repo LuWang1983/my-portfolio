@@ -1,10 +1,10 @@
-const { readFile, writeFile, readdir, unlink } = require("fs").promises;
-const path = require("path");
+const { readFile, writeFile, readdir, unlink } = require('fs').promises;
+const path = require('path');
 
 /**
  * Combines environment variable and "/projects" to get a directory of projects.
  */
-const getProjectsDir = () => path.join(process.env.DATA_PATH, "projects");
+const getProjectsDir = () => path.join(process.env.DATA_PATH, 'projects');
 
 /**
  * Constructs a single project file path
@@ -14,7 +14,7 @@ const buildProjectPath = (key) => path.resolve(getProjectsDir(), `${key}.json`);
 /**
  * Constructs a path to the general site data file.
  */
-const getSitePath = () => path.join(process.env.DATA_PATH, "site.json");
+const getSitePath = () => path.join(process.env.DATA_PATH, 'site.json');
 
 /**
  * Constructs a validation object for a project object.
@@ -33,20 +33,20 @@ exports.buildProjectValidationErrors = function buildProjectValidationErrors(
   const errors = { valid: true, errors: {} };
   if (!data.title) {
     errors.valid = false;
-    errors.errors.title = ["A title MUST be provided."];
+    errors.errors.title = ['A title MUST be provided.'];
   }
   if (!data.description) {
     errors.valid = false;
-    errors.errors.description = ["A description MUST be provided."];
+    errors.errors.description = ['A description MUST be provided.'];
   }
   if (!data.id) {
     errors.valid = false;
-    errors.errors.id = ["An id MUST be provided."];
+    errors.errors.id = ['An id MUST be provided.'];
   }
   if (data.id && !data.id.match(/^[a-z\-]+$/)) {
     errors.valid = false;
     errors.errors.id = [
-      "The id MUST contain only lower-case letters and dashes.",
+      'The id MUST contain only lower-case letters and dashes.',
     ];
   }
   return errors;
@@ -66,11 +66,11 @@ exports.buildSiteValidationErrors = function buildSiteValidationErrors(data) {
   const errors = { valid: true, errors: {} };
   if (!data.headline) {
     errors.valid = false;
-    errors.errors.headline = ["A headline MUST be provided."];
+    errors.errors.headline = ['A headline MUST be provided.'];
   }
   if (!data.welcomeMessage) {
     errors.valid = false;
-    errors.errors.welcomeMessage = ["A welcome message MUST be provided."];
+    errors.errors.welcomeMessage = ['A welcome message MUST be provided.'];
   }
   return errors;
 };
@@ -83,7 +83,7 @@ exports.listProjects = async function listProjects() {
   const projectFiles = files.filter((path) => path.match(/\.json$/));
   const projectReaders = projectFiles.map(async (pathName) => {
     const projectFilePath = path.join(getProjectsDir(), pathName);
-    const projectRaw = await readFile(projectFilePath, "utf-8");
+    const projectRaw = await readFile(projectFilePath, 'utf-8');
     return JSON.parse(projectRaw);
   });
   return Promise.all(projectReaders);
@@ -95,10 +95,10 @@ exports.listProjects = async function listProjects() {
 exports.readProject = async function readProject(key) {
   const projectFilePath = buildProjectPath(key);
   try {
-    const projectRaw = await readFile(projectFilePath, "utf-8");
+    const projectRaw = await readFile(projectFilePath, 'utf-8');
     return JSON.parse(projectRaw);
   } catch (error) {
-    if (error.code === "ENOENT") {
+    if (error.code === 'ENOENT') {
       return null;
     }
     throw error;
@@ -126,7 +126,7 @@ exports.deleteProject = function deleteProject(key) {
  */
 exports.readSite = async function readSite() {
   const sitePath = getSitePath();
-  const rawSite = await readFile(sitePath, "utf-8");
+  const rawSite = await readFile(sitePath, 'utf-8');
   return JSON.parse(rawSite);
 };
 

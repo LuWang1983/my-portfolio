@@ -1,4 +1,4 @@
-const express = require("express");
+const express = require('express');
 const {
   listProjects,
   readProject,
@@ -8,7 +8,7 @@ const {
   readSite,
   writeSite,
   buildSiteValidationErrors,
-} = require("./model.js");
+} = require('./model.js');
 
 const api = new express.Router();
 
@@ -27,7 +27,7 @@ function trapAsyncErrors(handler) {
  * Loads and sends a list of all projects currently on disk.
  */
 api.get(
-  "/projects",
+  '/projects',
   trapAsyncErrors(async (req, res, next) => {
     res.json(await listProjects());
   })
@@ -38,7 +38,7 @@ api.get(
  * This will replace the porject entirely, not merge.
  */
 api.put(
-  "/projects/:id",
+  '/projects/:id',
   trapAsyncErrors(async (req, res, next) => {
     const { title, description } = req.body;
     const project = { title, description, id: req.params.id };
@@ -56,7 +56,7 @@ api.put(
  * Loads and sends a single project object, or 404 if no object is on disk.
  */
 api.get(
-  "/projects/:id",
+  '/projects/:id',
   trapAsyncErrors(async (req, res, next) => {
     const project = await readProject(req.params.id);
     if (project === null) {
@@ -71,7 +71,7 @@ api.get(
  * Deletes a single project from disk.
  */
 api.delete(
-  "/projects/:id",
+  '/projects/:id',
   trapAsyncErrors(async (req, res, next) => {
     await deleteProject(req.params.id);
     res.sendStatus(204);
@@ -82,7 +82,7 @@ api.delete(
  * Load site data from disk.
  */
 api.get(
-  "/site",
+  '/site',
   trapAsyncErrors(async (req, res, next) => {
     const site = await readSite();
     res.json(site);
@@ -93,7 +93,7 @@ api.get(
  * Update site data (this will completely overwrite data, not merge).
  */
 api.put(
-  "/site",
+  '/site',
   trapAsyncErrors(async (req, res, next) => {
     const { headline, welcomeMessage } = req.body;
     const site = { headline, welcomeMessage };

@@ -1,5 +1,5 @@
-import React from "react";
-import { navigateTo } from "../util/routing";
+import React from 'react';
+import { navigateTo } from '../util/routing';
 
 export default function Link(props) {
   return (

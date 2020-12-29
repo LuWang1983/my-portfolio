@@ -1,4 +1,4 @@
-const pathToRegexp = require("path-to-regexp");
+const pathToRegexp = require('path-to-regexp');
 
 const stateChangeCallbacks = [];
 
@@ -10,7 +10,7 @@ function invokeStateChangeCallbacks() {
   stateChangeCallbacks.forEach((callback) => callback());
 }
 
-window.addEventListener("popstate", invokeStateChangeCallbacks);
+window.addEventListener('popstate', invokeStateChangeCallbacks);
 
 export function navigateTo(path) {
   window.history.pushState({}, null, path);

@@ -1,8 +1,8 @@
-import React, { useState } from "react";
-import Header from "../header";
-import Errors from "../errors";
-import Link from "../link";
-import { navigateTo } from "../../util/routing";
+import React, { useState } from 'react';
+import Header from '../header';
+import Errors from '../errors';
+import Link from '../link';
+import { navigateTo } from '../../util/routing';
 
 export default function EditProject({ project }) {
   const [title, setTitle] = useState(project.title);
@@ -17,9 +17,9 @@ export default function EditProject({ project }) {
     setSaving(true);
     try {
       const response = await fetch(`/api/projects/${project.id}`, {
-        method: "PUT",
+        method: 'PUT',
         headers: {
-          "Content-Type": "application/json",
+          'Content-Type': 'application/json',
         },
         body: JSON.stringify({ title, description }),
       });
@@ -36,7 +36,7 @@ export default function EditProject({ project }) {
       }
     } catch (error) {
       console.error(error);
-      navigateTo("/application-error");
+      navigateTo('/application-error');
     } finally {
       setSaving(false);
     }

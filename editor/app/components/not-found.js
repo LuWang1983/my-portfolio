@@ -1,6 +1,6 @@
-import React from "react";
-import Header from "./header";
-import Link from "./link";
+import React from 'react';
+import Header from './header';
+import Link from './link';
 
 export default function NotFound(props) {
   return (

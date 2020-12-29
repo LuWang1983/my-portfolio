@@ -1,8 +1,8 @@
-import React, { useState } from "react";
-import Errors from "../errors";
-import Link from "../link";
-import Header from "../header";
-import { navigateTo } from "../../util/routing";
+import React, { useState } from 'react';
+import Errors from '../errors';
+import Link from '../link';
+import Header from '../header';
+import { navigateTo } from '../../util/routing';
 
 export default function EditSite({ site }) {
   const [headline, setHeadline] = useState(site.headline);
@@ -17,9 +17,9 @@ export default function EditSite({ site }) {
     setSaving(true);
     try {
       const response = await fetch(`/api/site`, {
-        method: "PUT",
+        method: 'PUT',
         headers: {
-          "Content-Type": "application/json",
+          'Content-Type': 'application/json',
         },
         body: JSON.stringify({ headline, welcomeMessage }),
       });
@@ -36,7 +36,7 @@ export default function EditSite({ site }) {
       }
     } catch (error) {
       console.error(error);
-      navigateTo("/application-error");
+      navigateTo('/application-error');
     } finally {
       setSaving(false);
     }
