@@ -1,7 +1,6 @@
 const path = require('path');
 const express = require('express');
 const volleyball = require('volleyball');
-const api = require('./api');
 const database = require('./database')
 const utils = require('./hashingUtils')
 //Redis can be used for Caching and Rate Limiting, it's a Key-Value store
@@ -18,8 +17,9 @@ if (process.env.NODE_ENV !== 'test') {
   app.use(volleyball);
 }
 app.use(express.json());
-app.use('/api', api);
+app.use('/api', require('./api'));
 
+/*
 //cahce in memory using Redis
 //const cache = {}
 app.get('/nocache/index.html', (req, res) => {
@@ -78,4 +78,4 @@ function pickServerRendezvous(username, servers) {
     }
   }
   return maxServer
-}
+}*/

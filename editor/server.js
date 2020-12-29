@@ -1,12 +1,10 @@
-//const path = require('path');
+const path = require('path');
 const app = require('./app');
-
-/*const Bundler = require('parcel-bundler');
+const appIndex = path.resolve('editor', 'app', 'index.html');
+const Bundler = require('parcel-bundler');
 const bundler = new Bundler(appIndex, {});
-app.use(bundler.middleware());*/
+app.use(bundler.middleware());
 
-
-//const appIndex = path.resolve('editor', 'app', 'index.html');
 const PORT = process.env.PORT || 4444;
 
 app.listen(PORT, (error) => {

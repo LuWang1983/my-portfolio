@@ -8,7 +8,7 @@ const {
   readSite,
   writeSite,
   buildSiteValidationErrors,
-} = require('./model.js');
+} = require('../model.js');
 
 const api = new express.Router();
 

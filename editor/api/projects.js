@@ -2,7 +2,6 @@ const router = require('express').Router();
 const db = require('../db')
 const {
   buildProjectValidationErrors,
-  buildSiteValidationErrors,
 } = require('../model.js');
 
 // Express doesn't have build in async-error handling, so this utility wraps all async http endpoind functions.
@@ -19,9 +18,11 @@ function trapAsyncErrors(handler) {
  * Loads and sends a list of all projects currently on disk.
  */
 router.get(
-  '/projects',
+  '/',
   trapAsyncErrors(async (req, res, next) => {
-    res.json(await db.collection('projects').get());
+    const projects = await db.collection('projects').get()
+    console.log(projects)
+    res.json(projects);
   })
 );
 
@@ -30,7 +31,7 @@ router.get(
  * This will replace the porject entirely, not merge.
  */
 router.put(
-  '/projects/:id',
+  '/:id',
   trapAsyncErrors(async (req, res, next) => {
     const { title, description } = req.body;
     const { id } = req.params
@@ -49,7 +50,7 @@ router.put(
  * Loads and sends a single project object, or 404 if no object is on disk.
  */
 router.get(
-  '/projects/:id',
+  '/:id',
   trapAsyncErrors(async (req, res, next) => {
     const projectRef = await db.collection('projects').doc(req.params.id);
     const project = await projectRef.get()
@@ -65,39 +66,10 @@ router.get(
  * Deletes a single project from disk.
  */
 router.delete(
-  '/projects/:id',
+  '/:id',
   trapAsyncErrors(async (req, res, next) => {
     await db.collection('projects').doc(req.params.id).delete();
     res.sendStatus(204);
-  })
-);
-
-/**
- * Load site data from disk.
- */
-router.get(
-  '/site',
-  trapAsyncErrors(async (req, res, next) => {
-    const site = await readSite();
-    res.json(site);
-  })
-);
-
-/**
- * Update site data (this will completely overwrite data, not merge).
- */
-router.put(
-  '/site',
-  trapAsyncErrors(async (req, res, next) => {
-    const { headline, welcomeMessage } = req.body;
-    const site = { headline, welcomeMessage };
-    const validationErrors = buildSiteValidationErrors(site);
-    if (validationErrors.valid === false) {
-      res.status(422).send(validationErrors.errors);
-    } else {
-      await writeSite(site);
-      res.sendStatus(200);
-    }
   })
 );
 
